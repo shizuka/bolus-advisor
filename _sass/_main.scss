@@ -100,8 +100,9 @@ body {
 }
 
 #wrapper {
-  width: 355px;
+  width: 350px;
   margin: $s-h1 auto;
+  padding: 5px;
 }
 
 header {
@@ -112,6 +113,7 @@ header {
   
   .title {
     justify-content: flex-start;
+    margin-left: 10px;
     font-family: $f-title;
     font-size: $s-title;
     color: $ct-title;
@@ -119,6 +121,7 @@ header {
   
   nav {
     margin-left: auto;
+    margin-right: 10px;
     ul {
       list-style-type: none;
       li {
