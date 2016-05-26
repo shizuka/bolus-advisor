@@ -210,7 +210,8 @@ hr.sep {
 }
 %numbox {
   width: 6ex;
-  margin-right: 0.5em;
+  text-align: right;
+  margin-right: 0.25em;
 }
 %midcap {
   margin-left: auto;
@@ -228,17 +229,19 @@ hr.sep {
   h2 {
     display: inline-block;
     margin-right: 1em;
+    margin-left: auto;
     margin-bottom: 0;
     font-size: $s-h1;
   }
   .value {
     display: inline;
-    font-size: $s-h1;
+    margin-right: auto;
+    font-size: 32px;
     color: $ct-outval;
   }
   
   output {
-    font-weight: bolder;
+    font-weight: bold;
   }
 }
 
@@ -328,6 +331,7 @@ hr.sep {
     height: 24px;
     padding: 5px;
     cursor: pointer;
+    font-family: $f-text;
     
     @include transition(all .2s cubic-bezier(.25,.46,.45,.94));
     
@@ -344,6 +348,11 @@ hr.sep {
     margin-top: 10px;
     width: 100%;
     padding: 5px;
+    
+    select, input {
+      font-size: $s-h3;
+      text-align: right;
+    }
     
     ul {
       list-style-type: none;
