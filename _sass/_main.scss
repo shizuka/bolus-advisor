@@ -34,6 +34,7 @@
 $c-bg: $md-wht;
 $c-header: $md-wht;
 $c-warning: $md-yel-dark;
+$c-danger: $md-red-lite;
 $c-hilight: $md-gry-lite;
 
 $c-bolus: $md-gry-mid;
@@ -146,6 +147,11 @@ footer {
   width: auto;
 }
 
+.danger {
+  background-color: $c-danger;
+  width: auto;
+}
+
 .hilight {
   background-color: $c-hilight;
   padding: 3px;
@@ -221,13 +227,17 @@ hr.sep {
   margin-left: auto;
 }
 
-#readLegal {
+.banner {
+  @extend .box;
   display: flex;
   align-items: center;
   .icon {
     font-size: $s-h1;
-    margin-right: 0.5em;
+    margin-right: 0.25em;
   }
+}
+
+#readLegal {
   .close {
     margin-left: auto;
     color: $md-blk-lite;

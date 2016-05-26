@@ -36,8 +36,8 @@
     
     <div id="bolus-advisor" ng-controller="AdvisorController as advisor" ng-init="advisor.updateBolus()">
       
-      <div id="readLegal" class=" warning box" ng-hide="advisor.opts.hasReadLegal">
-        <div class="icon"><i class="fa fa-warning"></i></div>
+      <div id="readLegal" class="warning banner" ng-hide="advisor.opts.hasReadLegal">
+        <div class="icon"><i class="fa fa-fw fa-warning"></i></div>
         <div>
           <strong>USE AT YOUR OWN RISK</strong> <br>
           CHECK SETTINGS BEFORE USE
@@ -64,6 +64,20 @@
         </div>
         <div class="endcap">
           <span ng-bind="advisor.bolus.carb"></span>u
+        </div>
+      </div>
+      <div id="hyperwarning" class="warning banner" ng-show="advisor.bgRange == 'hyper'">
+        <div class="icon"><i class="fa fa-fw fa-warning"></i></div>
+        <div>
+          <strong>HYPER WARNING</strong> <br>
+          Check for ketones and monitor carefully
+        </div>
+      </div>
+      <div id="hypowarning" class="danger banner" ng-show="advisor.bgRange == 'hypo'">
+        <div class="icon"><i class="fa fa-fw fa-exclamation-circle"></i></div>
+        <div>
+          <strong>HYPO WARNING - No advice given</strong> <br>
+          Treat your hypo first!
         </div>
       </div>
       <div id="out_bolus" class="box">
