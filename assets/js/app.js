@@ -53,7 +53,6 @@
     };
     
     this.updateBolus = function () {
-      console.log("update");
       /**
        * (current bG - Target bG) * (sensitivity) + ((carbs * (carb ratio))
        */
@@ -88,21 +87,52 @@
     };
     
     this.ackReadLegal = function () {
+      console.log("Acknowledged top disclaimer...");
       this.opts.hasReadLegal = true;
+      this.saveSettings();
     };
     
     this.loadSettings = function () {
-      console.log("load!");
+      console.log("Loading settings from LocalStorage...");
+      if (localStorage.getItem('sk-bolus-advisor-options') === null) {
+        this.clearSettings();
+      }
+      this.opts = JSON.parse(localStorage.getItem('sk-bolus-advisor-options'));
+      console.log("Loaded. Updating...");
       this.updateBolus();
     };
     
     this.saveSettings = function () {
-      console.log("save!");
+      console.log("Saving settings to LocalStorage...");
+      localStorage.setItem('sk-bolus-advisor-options', JSON.stringify(this.opts));
+      console.log("Saved. Updating...");
       this.updateBolus();
     };
     
     this.clearSettings = function () {
       console.log("Restoring defaults...");
+      this.opts = {
+        "hasReadLegal": false,
+        "carbRatio": {
+          "insulin": 1,
+          "carbs": 15
+        },
+        "insulinSensitivity": {
+          "insulin": 1,
+          "bgDrop": 50
+        },
+        "units": {
+          "bg": "mg/dL",
+          "carbs": "g",
+        },
+        "bgLevels": {
+          "hyper": 250,
+          "high": 200,
+          "low": 100,
+          "hypo": 70
+        }
+      };
+      this.saveSettings();
     };
     
   });

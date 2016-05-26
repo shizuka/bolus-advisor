@@ -34,7 +34,7 @@
     
     <hr class="sep">
     
-    <div id="bolus-advisor" ng-controller="AdvisorController as advisor" ng-init="advisor.updateBolus()">
+    <div id="bolus-advisor" ng-controller="AdvisorController as advisor" ng-init="advisor.loadSettings()">
       
       <div id="readLegal" class="warning banner" ng-hide="advisor.opts.hasReadLegal">
         <div class="icon"><i class="fa fa-fw fa-warning"></i></div>
@@ -87,7 +87,7 @@
       
       <hr class="sep">
       
-      <div id="settings" class="box" ng-init="advisor.loadSettings()">
+      <div id="settings" class="box">
         <h2>Settings</h2>
         <button id="clearsettings" ng-click="advisor.clearSettings()">Reset Defaults</button>
         <fieldset class="units">
