@@ -5,6 +5,14 @@
 (function () {
   var app = angular.module('bolus-advisor', []);
   
+  app.directive('selectOnClick', function () {
+    return function (scope, element, attrs) {
+      element.bind('click', function () {
+        this.select();
+      });
+    };
+  });
+  
   app.controller('AdvisorController', function () {
     this.opts = {
       "hasReadLegal": false,

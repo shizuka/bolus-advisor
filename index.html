@@ -47,7 +47,7 @@
       
       <div id="in_bg" class="box">
         <h2>bG Level</h2>
-        <input type="number" min="0" max="400" ng-model="advisor.currentBG" ng-change="advisor.updateBolus()"><span ng-bind="advisor.opts.units.bg"></span>
+        <input type="number" min="0" max="400" ng-model="advisor.currentBG" ng-change="advisor.updateBolus()" select-on-click><span ng-bind="advisor.opts.units.bg"></span>
         <div class="midcap">
           <div id="bgrange" ng-class="advisor.bgRange" ng-bind="advisor.bgRange"></div>
         </div>
@@ -57,7 +57,7 @@
       </div>
       <div id="in_carbs" class="box">
         <h2>Carbs</h2>
-        <input type="number" id="carbs" min="0" ng-model="advisor.carbs" ng-change="advisor.updateBolus()"><span ng-bind="advisor.opts.units.carbs"></span>
+        <input type="number" id="carbs" min="0" ng-model="advisor.carbs" ng-change="advisor.updateBolus()" select-on-click><span ng-bind="advisor.opts.units.carbs"></span>
         <div class="midcap">
           <span class="head">Ratio</span> <br>
           <strong ng-bind="advisor.opts.carbRatio.insulin"></strong>u / <strong ng-bind="advisor.opts.carbRatio.carbs"></strong><span ng-bind="advisor.opts.units.carbs"></span>
@@ -89,7 +89,7 @@
       
       <div id="settings" class="box" ng-init="advisor.loadSettings()">
         <h2>Settings</h2>
-        <button id="clearsettings" ng-click="advisor.clearSettings()">Use Defaults</button>
+        <button id="clearsettings" ng-click="advisor.clearSettings()">Reset Defaults</button>
         <fieldset class="units">
           <legend>Units</legend>
           <ul class="units">
@@ -116,16 +116,16 @@
             <li>
               <label for="carbratio">
                 Carb Ratio:
-                <input type="number" id="cr_insulin" min="0" ng-model="advisor.opts.carbRatio.insulin" ng-change="advisor.saveSettings()">u
-                per <input type="number" id="cr_carbs" min="0" ng-model="advisor.opts.carbRatio.carbs" ng-change="advisor.saveSettings()">
+                <input type="number" id="cr_insulin" min="0" ng-model="advisor.opts.carbRatio.insulin" ng-change="advisor.saveSettings()" select-on-click>u
+                per <input type="number" id="cr_carbs" min="0" ng-model="advisor.opts.carbRatio.carbs" ng-change="advisor.saveSettings()" select-on-click>
                 <span ng-bind="advisor.opts.units.carbs"></span>
               </label>
             </li>
             <li>
               <label for="sensitivity">
                 Sensitivity:
-                <input type="number" id="is_insulin" min="0" ng-model="advisor.opts.insulinSensitivity.insulin" ng-change="advisor.saveSettings()">u 
-                lowers <input type="number" id="is_bg" min="0" max="400" ng-model="advisor.opts.insulinSensitivity.bgDrop" ng-change="advisor.saveSettings()">
+                <input type="number" id="is_insulin" min="0" ng-model="advisor.opts.insulinSensitivity.insulin" ng-change="advisor.saveSettings()" select-on-click>u 
+                lowers <input type="number" id="is_bg" min="0" max="400" ng-model="advisor.opts.insulinSensitivity.bgDrop" ng-change="advisor.saveSettings()" select-on-click>
                 <span ng-bind="advisor.opts.units.bg"></span>
               </label>
             </li>
@@ -136,25 +136,25 @@
           <ul>
             <li>
               <label for="hyperlimit"> Hyper:
-                <input type="number" id="hyperlimit" min="0" max="400" ng-model="advisor.opts.bgLevels.hyper" ng-change="advisor.saveSettings()">
+                <input type="number" id="hyperlimit" min="0" max="400" ng-model="advisor.opts.bgLevels.hyper" ng-change="advisor.saveSettings()" select-on-click>
                 <span ng-bind="advisor.opts.units.bg"></span>
               </label>
             </li>
             <li>
               <label for="high"> High:
-                <input type="number" id="high" min="0" max="400" ng-model="advisor.opts.bgLevels.high" ng-change="advisor.saveSettings()">
+                <input type="number" id="high" min="0" max="400" ng-model="advisor.opts.bgLevels.high" ng-change="advisor.saveSettings()" select-on-click>
                 <span ng-bind="advisor.opts.units.bg"></span>
               </label>
             </li>
             <li>
               <label for="low"> Low:
-                <input type="number" id="low" min="0" max="400" ng-model="advisor.opts.bgLevels.low" ng-change="advisor.saveSettings()">
+                <input type="number" id="low" min="0" max="400" ng-model="advisor.opts.bgLevels.low" ng-change="advisor.saveSettings()" select-on-click>
                 <span ng-bind="advisor.opts.units.bg"></span>
               </label>
             </li>
             <li>
               <label for="hypolimit"> Hypo:
-                <input type="number" min="0" max="400" ng-model="advisor.opts.bgLevels.hypo" ng-change="advisor.saveSettings()">
+                <input type="number" min="0" max="400" ng-model="advisor.opts.bgLevels.hypo" ng-change="advisor.saveSettings()" select-on-click>
                 <span ng-bind="advisor.opts.units.bg"></span>
               </label>
             </li>
