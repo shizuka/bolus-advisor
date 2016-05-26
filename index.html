@@ -36,6 +36,15 @@
     
     <div id="bolus-advisor" ng-controller="AdvisorController as advisor" ng-init="advisor.updateBolus()">
       
+      <div id="readLegal" class=" warning box" ng-hide="advisor.opts.hasReadLegal">
+        <div class="icon"><i class="fa fa-warning"></i></div>
+        <div>
+          <strong>USE AT YOUR OWN RISK</strong> <br>
+          CHECK SETTINGS BEFORE USE
+        </div>
+        <a class="close" ng-click="advisor.ackReadLegal()"><i class="fa fa-close"></i></a>
+      </div>
+      
       <div id="in_bg" class="box">
         <h2>bG Level</h2>
         <input type="number" min="0" max="400" ng-model="advisor.currentBG" ng-change="advisor.updateBolus()"><span ng-bind="advisor.opts.units.bg"></span>
@@ -64,16 +73,16 @@
       
       <hr class="sep">
       
-      <div id="settings" class="box">
+      <div id="settings" class="box" ng-init="advisor.loadSettings()">
         <h2>Settings</h2>
-        <button id="clearsettings" ng-click="advisor.loadSettings()">Clear All</button>
+        <button id="clearsettings" ng-click="advisor.clearSettings()">Use Defaults</button>
         <fieldset class="units">
           <legend>Units</legend>
           <ul class="units">
             <li>
               <label for="bgunits">
                 bG Units:
-                <select name="bG Units" id="bgunits" ng-model="advisor.opts.units.bg" ng-change="advisor.updateBolus()">
+                <select name="bG Units" id="bgunits" ng-model="advisor.opts.units.bg" ng-change="advisor.saveSettings()">
                   <option value="mg/dL">mg/dL</option>
                   <option value="mmol/L">mmol/L</option>
                 </select>
@@ -82,7 +91,7 @@
             <li>
               <label for="carbunits">
                 Carb Units:
-                <select name="Carb Units" id="carbunits" ng-model="advisor.opts.units.carbs" ng-change="advisor.updateBolus()">
+                <select name="Carb Units" id="carbunits" ng-model="advisor.opts.units.carbs" ng-change="advisor.saveSettings()">
                   <option value="g">g - Grams</option>
                   <option value="KE">KE - Kohlenhydrateinheit (10g)</option>
                   <option value="BE">BE - Bread Equivalent (12g)</option>
@@ -93,16 +102,16 @@
             <li>
               <label for="carbratio">
                 Carb Ratio:
-                <input type="number" id="cr_insulin" min="0" ng-model="advisor.opts.carbRatio.insulin" ng-change="advisor.updateBolus()">u
-                per <input type="number" id="cr_carbs" min="0" ng-model="advisor.opts.carbRatio.carbs" ng-change="advisor.updateBolus()">
+                <input type="number" id="cr_insulin" min="0" ng-model="advisor.opts.carbRatio.insulin" ng-change="advisor.saveSettings()">u
+                per <input type="number" id="cr_carbs" min="0" ng-model="advisor.opts.carbRatio.carbs" ng-change="advisor.saveSettings()">
                 <span ng-bind="advisor.opts.units.carbs"></span>
               </label>
             </li>
             <li>
               <label for="sensitivity">
                 Sensitivity:
-                <input type="number" id="is_insulin" min="0" ng-model="advisor.opts.insulinSensitivity.insulin" ng-change="advisor.updateBolus()">u 
-                lowers <input type="number" id="is_bg" min="0" max="400" ng-model="advisor.opts.insulinSensitivity.bgDrop" ng-change="advisor.updateBolus()">
+                <input type="number" id="is_insulin" min="0" ng-model="advisor.opts.insulinSensitivity.insulin" ng-change="advisor.saveSettings()">u 
+                lowers <input type="number" id="is_bg" min="0" max="400" ng-model="advisor.opts.insulinSensitivity.bgDrop" ng-change="advisor.saveSettings()">
                 <span ng-bind="advisor.opts.units.bg"></span>
               </label>
             </li>
@@ -113,25 +122,25 @@
           <ul>
             <li>
               <label for="hyperlimit"> Hyper:
-                <input type="number" id="hyperlimit" min="0" max="400" ng-model="advisor.opts.bgLevels.hyper" ng-change="advisor.updateBolus()">
+                <input type="number" id="hyperlimit" min="0" max="400" ng-model="advisor.opts.bgLevels.hyper" ng-change="advisor.saveSettings()">
                 <span ng-bind="advisor.opts.units.bg"></span>
               </label>
             </li>
             <li>
               <label for="high"> High:
-                <input type="number" id="high" min="0" max="400" ng-model="advisor.opts.bgLevels.high" ng-change="advisor.updateBolus()">
+                <input type="number" id="high" min="0" max="400" ng-model="advisor.opts.bgLevels.high" ng-change="advisor.saveSettings()">
                 <span ng-bind="advisor.opts.units.bg"></span>
               </label>
             </li>
             <li>
               <label for="low"> Low:
-                <input type="number" id="low" min="0" max="400" ng-model="advisor.opts.bgLevels.low" ng-change="advisor.updateBolus()">
+                <input type="number" id="low" min="0" max="400" ng-model="advisor.opts.bgLevels.low" ng-change="advisor.saveSettings()">
                 <span ng-bind="advisor.opts.units.bg"></span>
               </label>
             </li>
             <li>
               <label for="hypolimit"> Hypo:
-                <input type="number" min="0" max="400" ng-model="advisor.opts.bgLevels.hypo" ng-change="advisor.updateBolus()">
+                <input type="number" min="0" max="400" ng-model="advisor.opts.bgLevels.hypo" ng-change="advisor.saveSettings()">
                 <span ng-bind="advisor.opts.units.bg"></span>
               </label>
             </li>
@@ -164,7 +173,7 @@
     
     <h3>Privacy Notice</h3>
     <p>This page makes use of HTML5 LocalStorage to remember your settings the
-      next time you visit, and can be cleared at any time.
+      next time you visit.
       No data is transmitted to the internet, and this page will <em>not</em>
       remember your previous calculations.
     </p>
@@ -176,10 +185,6 @@
     + <span class="hilight">(<abbr title="carbohydrates eaten">carbs</abbr>
     * <abbr title="insulin / carbs">carb ratio</abbr>)</span></p>
     <p><span class="hilight">Omitted</span> if no carbs input</p>
-    <p>For your safety, this page will not operate with blood glucose levels
-      exceeding 400 mg/dL (23 mmol/L). <br>
-      You should be calling a doctor above that, not me.
-    </p>
     
     <h3>About Bolus Advisor</h3>
     <p>I'm a Type 1 Diabetic myself, and was very pleased with the Accu-Chek

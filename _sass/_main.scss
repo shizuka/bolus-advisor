@@ -221,6 +221,24 @@ hr.sep {
   margin-left: auto;
 }
 
+#readLegal {
+  display: flex;
+  align-items: center;
+  .icon {
+    font-size: $s-h1;
+    margin-right: 0.5em;
+  }
+  .close {
+    margin-left: auto;
+    color: $md-blk-lite;
+    
+    &:hover {
+      color: $md-gry-lite;
+      cursor: pointer;
+    }
+  }
+}
+
 #out_bolus {
   background-color: $c-bolus;
   display: flex;

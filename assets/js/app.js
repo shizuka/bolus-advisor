@@ -80,12 +80,23 @@
       };
     };
     
+    this.ackReadLegal = function () {
+      this.opts.hasReadLegal = true;
+    };
+    
     this.loadSettings = function () {
       console.log("load!");
+      this.updateBolus();
     };
     
     this.saveSettings = function () {
       console.log("save!");
+      this.updateBolus();
     };
+    
+    this.clearSettings = function () {
+      console.log("Restoring defaults...");
+    };
+    
   });
 })();
