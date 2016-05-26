@@ -1,0 +1,9 @@
+{
+  "name": "bolus-advisor",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"npm run jekyll:w\" \"npm run lite\" ",
+    "jekyll:w": "bundle exec jekyll build --watch",
+    "lite": "lite-server"
+  }
+}

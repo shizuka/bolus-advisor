@@ -1,0 +1,14 @@
+# Bolus Advisor
+# Shizuka Kamishima
+title: Bolus Advisor
+url: "http://bolus.vortalcord.net"
+baseurl: ""
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  hard_wrap: false
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+
+sass:
+  sass_dir: _sass
