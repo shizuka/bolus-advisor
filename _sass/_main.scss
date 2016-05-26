@@ -1,0 +1,360 @@
+// Bolus Advisor - Main Stylesheet
+// Shizuka Kamishima
+
+//**** MIXINS ****//
+@import 'lib/helpers';
+@import 'lib/web-fonts';
+
+//**** STYLE VARS ****//
+
+  $md-red-dark: #c0392b;
+  $md-org-dark: #d35400;
+  $md-yel-dark: #f39c12;
+  $md-grn-dark: #27ae60;
+  $md-tel-dark: #16a085;
+  $md-blu-dark: #2980b9;
+  $md-pur-dark: #8e44ad;
+  
+  $md-red-lite: #e74c3c;
+  $md-org-lite: #e67e22;
+  $md-yel-lite: #f1c40f;
+  $md-grn-lite: #2ecc71;
+  $md-tel-lite: #1abc9c;
+  $md-blu-lite: #3498db;
+  $md-pur-lite: #9b59b6;
+  
+  $md-wht:      #ecf0f1;
+  $md-gry-lite: #bdc3c7;
+  $md-gry-mid:  #95a5a6;
+  $md-gry-dark: #7f8c8d;
+  $md-blk-lite: #34495e;
+  $md-blk-dark: #2c3e50;
+
+//**** COLORS ****//
+$c-bg: $md-wht;
+$c-header: $md-wht;
+$c-warning: $md-yel-dark;
+$c-hilight: $md-gry-lite;
+
+$c-bolus: $md-gry-mid;
+$c-params: $md-gry-lite;
+$c-settings: $md-gry-lite;
+$c-clearall: $md-gry-lite;
+
+$c-hyper: $md-blu-dark;
+$c-high: $md-blu-lite;
+$c-normal: $md-grn-lite;
+$c-low: $md-yel-lite;
+$c-hypo: $md-red-lite;
+
+$cb-up: $md-gry-mid;
+$cb-dn: $md-gry-lite;
+
+$ct-text: $md-blk-dark;
+$ct-title: $md-blk-lite;
+$ct-headers: $md-blk-lite;
+$ct-clearall: $md-red-dark;
+$ct-clearall-hover: $md-red-lite;
+
+$ct-outval: $md-blk-lite;
+
+$cl-link: $md-blu-dark;
+$cl-hover: lighten($cl-link, 25%);
+
+//**** FONTS ****//
+$fonts: ();
+@function font($key) {
+  @if map-has-key($fonts, key) == false {
+    $fonts: map-merge($fonts, ($key: ($key))) !global;
+  }
+  @return $key;
+}
+
+$f-default: 'Verdana', sans-serif;
+
+$f-text: font('Fira Sans'), $f-default;
+$f-title: font('Cherry Cream Soda'), $f-default;
+
+//**** SIZES ****//
+$s-text: 14px;
+$s-h1: 24px;
+$s-h2: 18px;
+$s-h3: 16px;
+$s-title: $s-h1;
+$s-footer: 12px;
+
+//**** INCLUDE FONTS ****//
+@include web-fonts(map-values($fonts));
+
+/**** PAGE BLOCKS ****/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: $c-bg;
+  font-family: $f-text;
+  font-size: $s-text;
+}
+
+#wrapper {
+  width: 355px;
+  margin: $s-h1 auto;
+}
+
+header {
+  background-color: $c-header;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  
+  .title {
+    justify-content: flex-start;
+    font-family: $f-title;
+    font-size: $s-title;
+    color: $ct-title;
+  }
+  
+  nav {
+    margin-left: auto;
+    ul {
+      list-style-type: none;
+      li {
+        width: 48px;
+        text-align: center;
+        font-size: 24px;
+        float: left;
+      }
+    }
+  }
+}
+
+footer {
+  text-align: center;
+  font-size: $s-footer;
+}
+
+.box {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.warning {
+  background-color: $c-warning;
+  width: auto;
+}
+
+.hilight {
+  background-color: $c-hilight;
+  padding: 3px;
+}
+
+/**** TEXT ****/
+h1, h2, h3 {
+  &:not(:first-child) {
+    margin-top: 15px;
+  }
+  margin-bottom: 5px;
+}
+h1 {
+  font-size: $s-h1;
+}
+
+h2 {
+  font-size: $s-h2;
+}
+
+h3 {
+  font-size: $s-h3;
+}
+
+p {
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+a {
+  color: $cl-link;
+  text-decoration: none;
+  
+  &:visited {
+    color: $cl-link;
+  }
+  
+  &:hover {
+    color: $cl-hover;
+    text-decoration: underline;
+  }
+}
+
+abbr {
+  border-bottom: 1px dotted $ct-text;
+}
+
+hr.sep {
+  border: none;
+  border-top: 1px solid $cb-up;
+  border-bottom: 1px solid $cb-dn;
+  margin: 1em 0;
+}
+
+/**** ADVISOR BLOCKS ****/
+%heads {
+  display: inline-block;
+  margin-right: 0.5em;
+  margin-bottom: 0;
+  font-size: $s-h2;
+}
+%numbox {
+  width: 6ex;
+  margin-right: 0.5em;
+}
+%midcap {
+  margin-left: auto;
+}
+%endcap {
+  width: 48px;
+  margin-left: auto;
+}
+
+#out_bolus {
+  background-color: $c-bolus;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  h2 {
+    display: inline-block;
+    margin-right: 1em;
+    margin-bottom: 0;
+    font-size: $s-h1;
+  }
+  .value {
+    display: inline;
+    font-size: $s-h1;
+    color: $ct-outval;
+  }
+  
+  output {
+    font-weight: bolder;
+  }
+}
+
+#in_carbs {
+  background-color: $c-params;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  h2 {
+    @extend %heads;
+  }
+  
+  input {
+    @extend %numbox;
+    font-size: $s-h2;
+  }
+  
+  .midcap {
+    @extend %midcap;
+    text-align: center;
+    font-size: $s-h3;
+    .head {
+      font-size: $s-text;
+    }
+  }
+  
+  .endcap {
+    @extend %endcap;
+  }
+}
+
+#in_bg {
+  background-color: $c-params;
+  display: flex;
+  align-items: center;
+  height: 48px;
+  h2 {
+    @extend %heads;
+  }
+  
+  input {
+    @extend %numbox;
+    font-size: $s-h2;
+  }
+  
+  .midcap {
+    @extend %midcap;
+    
+    #bgrange {
+      padding: 0.5ex 0.5em;
+      border-radius: 10px;
+      &.hyper {
+        background-color: $c-hyper;
+      }
+      &.high {
+        background-color: $c-high;
+      }
+      &.normal {
+        background-color: $c-normal;
+      }
+      &.low {
+        background-color: $c-low;
+      }
+      &.hypo {
+        background-color: $c-hypo;
+      }
+    }
+  }
+  
+  .endcap {
+    @extend %endcap;
+  }
+}
+
+#settings {
+  background-color: transparent;
+  
+  #clearsettings {
+    float: right;
+    color: $ct-clearall;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-bottom: 2px solid $ct-clearall;
+    background-color: transparent;
+    margin-top: -32px;
+    height: 24px;
+    padding: 5px;
+    cursor: pointer;
+    
+    @include transition(all .2s cubic-bezier(.25,.46,.45,.94));
+    
+    &:hover {
+      color: $ct-clearall-hover;
+      background-color: $md-gry-lite;
+    }
+    &:active {
+      background-color: $md-gry-mid;
+    }
+  }
+  
+  fieldset {
+    margin-top: 10px;
+    width: 100%;
+    padding: 5px;
+    
+    ul {
+      list-style-type: none;
+      
+      li {
+        margin-bottom: 10px;
+        
+        input {
+          @extend %numbox;
+        }
+      }
+    }
+  }
+}
