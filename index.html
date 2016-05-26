@@ -7,6 +7,178 @@
   <title>{{ site.title }}</title>
 </head>
 <body>
-  TO BE FILLED
+  <div id="wrapper">
+    <header>
+      <h1 id="title">
+        {{ site.title }}
+      </h1>
+      <nav>
+        <ul>
+          <li><a href="#settings">Settings</a></li>
+          <li><a href="#info">Info</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div id="bolus" class="box">
+      <h2>Bolus</h2>
+      <output>X.X</output> u
+    </div>
+    <div id="carbs" class="box">
+      <h2>Carbs</h2>
+      <input type="number"><span class="unit carbs">g</span>
+      <div class="midcap">
+        Ratio
+      </div>
+      <div class="endcap">
+        +X.Xu
+      </div>
+    </div>
+    <div id="bg" class="box">
+      <h2>bG Level</h2>
+      <input type="number"><span class="unit bg">mg/dL</span>
+      <div class="midcap">
+        Chart
+      </div>
+      <div class="endcap">
+        +X.Xu
+      </div>
+    </div>
+    <hr class="sep">
+    <div id="settings" class="box">
+      <h2>Settings</h2>
+      <input type="button" value="Clear All">
+      <fieldset class="units">
+        <legend>Units</legend>
+        <ul class="units">
+          <li>
+            <label for="bgunits">
+              bG Units:
+              <select name="bG Units" id="bgunits">
+                <option value="mgdl">mg/dL</option>
+                <option value="mmoll">mmol/L</option>
+              </select>
+            </label>
+          </li>
+          <li>
+            <label for="carbunits">
+              Carb Units:
+              <select name="Carb Units" id="carbunits">
+                <option value="g">g - Grams</option>
+                <option value="ke">KE - Kohlenhydrateinheit (10g)</option>
+                <option value="be">BE - Bread Equivalent (12g)</option>
+                <option value="cc">CC - Carbohydrate Choice (15g)</option>
+              </select>
+            </label>
+          </li>
+          <li>
+            <label for="bolusround">
+              Round bolus to nearest:
+              <select name="Bolus Rounding" id="bolusround">
+                <option value="1">1u</option>
+                <option value="0.5">0.5u</option>
+                <option value="0.1">0.1u</option>
+              </select>
+            </label>
+          </li>
+          <li>
+            <label for="carbratio">
+              Carb Ratio:
+              <input type="number" id="carbratio">u per <input type="number"><span class="unit carb">g</span>
+            </label>
+          </li>
+          <li>
+            <label for="sensitivity">
+              Insulin Sensitivity:
+              <input type="number" id="sensitivity">u lowers <input type="number"><span class="unit bg">mg/dL</span>
+            </label>
+          </li>
+        </ul>
+      </fieldset>
+      <fieldset>
+        <legend>bG Thresholds</legend>
+        <ul class="ranges">
+          <li>
+            <label for="hyperlimit">
+              Hyper:
+              <input type="number" id="hyperlimit">
+            </label>
+          </li>
+          <li>
+            <label for="high">
+              High:
+              <input type="number" id="high">
+            </label>
+          </li>
+          <li>
+            <label for="low">
+              Low:
+              <input type="number" id="low">
+            </label>
+          </li>
+          <li>
+            <label for="hypolimit">
+              Hypo:
+              <input type="number">
+            </label>
+          </li>
+        </ul>
+      </fieldset>
+    </div>
+    <hr class="sep">
+    <div id="info" class="box">
+      <h2>Information</h2>
+      <div class="warning">
+        <h3>USE AT YOUR OWN RISK</h3>
+        <p>This page is intended for use by patients with Diabetes Mellitus, who
+          are trained in multiple daily insulin injection therapy, and are under
+          the supervision of healthcare professionals experienced in managing
+          insulin-treated patients. It provides direction for insulin adjustment
+          within the scope of a pre-planned treatment program from a healthcare
+          professional.
+        </p>
+        <p><strong>IN OTHER WORDS</strong>, I am not a doctor, this page is not
+        a doctor, and you should ask <em>yours</em> about consulting an advisor
+        like this before making changes to your insulin regimen. You will need
+        to set your target glucose ranges, insulin-to-carbohydrate ratio, and
+        insulin sensitivity ratio based on discussion with your doctor.
+        </p>
+      </div>
+      <h3>Privacy Notice</h3>
+      <p>This page makes use of HTML5 LocalStorage to remember your settings the
+        next time you visit, and can be cleared at any time.
+        No data is transmitted to the internet, and this page will <em>not</em>
+        remember your previous calculations.
+      </p>
+      <h3>About Bolus Advisor</h3>
+      <p>I'm a Type 1 Diabetic myself, and was very pleased with the Accu-Chek
+        Aviva Expert blood glucose meter. However, after a couple years, I was
+        offered the newer, much smaller and lighter, Aviva Connect, which
+        doesn't come with the Bolus Advice feature. I use a Dexcom for most of
+        my tracking over the day, so wanted to clone it into a mobile-friendly
+        page. No ads, no memory, just the raw calculation of how much insulin to
+        dose before a meal.
+      </p>
+      <p>Because this page has no memory of your calculations, it does <em>not</em>
+      know about any onboard insulin, and has no way to compute it. Be careful
+      when taking a dose while a previous dose may still be active. Active times
+      vary by specific insulins. <em>Consult your doctor!</em></p>
+      <h3>Bolus Calculation Algorithms</h3>
+      <p><strong>Advice without Carbs: </strong>
+      (<abbr title="current blood glucose">bG</abbr>
+       - <abbr title="midpoint of target glucose range">Target bG</abbr>)
+        * <abbr title="insulin / bG lowered">sensitivity</abbr></p>
+      <p><strong>Advice with Carbs: </strong>
+      (<abbr title="current blood glucose">bG</abbr>
+       - <abbr title="midpoint of target glucose range">Target bG</abbr>)
+        * <abbr title="insulin / bG lowered">sensitivity</abbr>
+         + (<abbr title="carbohydrates eaten">carbs</abbr>
+          * <abbr title="insulin / carbs">carb ratio</abbr>)</p>
+    </div>
+    <footer>
+      bolus advisor | <a href="https://twitter.com/kamishizuka">shizuka kamishima</a> | {{ site.time | date: '%F' }} <br>
+      <a href="#">top</a> | <a href="https://github.com/shizuka/bolus-advisor">src</a> <br>
+      rev <span class="revision">{{ site.github.build_revision | slice: 0,7 }}</span>
+    </footer>
+  </div>
 </body>
 </html>

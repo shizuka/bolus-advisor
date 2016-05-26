@@ -5,6 +5,11 @@ url: "http://bolus.vortalcord.net"
 baseurl: ""
 markdown: kramdown
 
+gems:
+  - jekyll-github-metadata
+
+repository: shizuka/bolus-advisor
+
 kramdown:
   input: GFM
   hard_wrap: false
