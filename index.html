@@ -36,9 +36,18 @@
         <div class="icon"><i class="fa fa-fw fa-warning"></i></div>
         <div>
           <strong>USE AT YOUR OWN RISK</strong> <br>
-          CHECK SETTINGS BEFORE USE
+          VERIFY SETTINGS BEFORE USE
         </div>
         <a class="close" ng-click="advisor.ackReadLegal()"><i class="fa fa-close"></i></a>
+      </div>
+      
+      <div id="versioncheck" class="info banner" ng-hide="advisor.opts.hasReadVersion">
+        <div class="icon"><i class="fa fa-fw fa-info-circle"></i></div>
+        <div>
+          <strong>ADVISOR UPDATED</strong> - <span ng-bind="advisor.opts.lastVersion"></span> &raquo; <strong ng-bind="advisor.version"></strong><br>
+          VERIFY SETTINGS BEFORE USE
+        </div>
+        <a class="close" ng-click="advisor.ackReadVersion()"><i class="fa fa-close"></i></a>
       </div>
       
       <div id="in_bg" class="box">
@@ -212,8 +221,7 @@
     <p>I hope this page proves useful to you!</p>
     
     <footer>
-      <a href="https://github.com/shizuka/bolus-advisor">bolus advisor</a> | <a href="https://twitter.com/kamishizuka">shizuka kamishima</a> | {{ site.time | date: '%F' }} <br>
-      rev <span class="revision">{{ site.github.build_revision | slice: 0,7 }}</span>
+      <a href="https://github.com/shizuka/bolus-advisor">bolus advisor</a> | shizuka kamishima | {{ site.time | date: '%F' }}
     </footer>
   </div>
 </body>

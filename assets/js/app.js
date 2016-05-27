@@ -14,38 +14,17 @@
   });
   
   app.controller('AdvisorController', function () {
-    this.opts = {
-      "hasReadLegal": false,
-      "carbRatio": {
-        "insulin": 1,
-        "carbs": 15
-      },
-      "insulinSensitivity": {
-        "insulin": 1,
-        "bgDrop": 50
-      },
-      "units": {
-        "bg": "mg/dL",
-        "carbs": "g",
-      },
-      "bgLevels": {
-        "hyper": 250,
-        "high": 200,
-        "low": 100,
-        "hypo": 70
-      }
-    };
+
+    /**
+     * HEY SHIZU, MAKE SURE TO UPDATE THIS EVERY TIME YOU CHANGE ADVISOR STUFF
+     */
+    this.version = "1.0.0";
     
-    var carbEqv = {
-      "KE": 10,
-      "BE": 12,
-      "CC": 15
-    };
+    console.log("Bolus Advisor v" + this.version + " by Shizuka Kamishima");
     
     this.currentBG = 0;
     this.bgRange = "";
     this.carbs = 0;
-    
     this.calc = {
       "bg": 0,
       "carb": 0,
@@ -53,9 +32,7 @@
     };
     
     this.updateBolus = function () {
-      /**
-       * (current bG - Target bG) * (sensitivity) + ((carbs * (carb ratio))
-       */
+      /* Bolus = [(current bG - Target bG) * (insulin / bgDrop)] + [carbs * (insulin / carbs)] */
       var carbRatio = this.opts.carbRatio.insulin / this.opts.carbRatio.carbs;
       var insRatio = this.opts.insulinSensitivity.insulin / this.opts.insulinSensitivity.bgDrop;
       var targetBG = (this.opts.bgLevels.high + this.opts.bgLevels.low) / 2;
@@ -87,32 +64,45 @@
     };
     
     this.ackReadLegal = function () {
-      console.log("Acknowledged top disclaimer...");
       this.opts.hasReadLegal = true;
+      console.log("Acknowledged top disclaimer");
+      this.saveSettings();
+    };
+    
+    this.ackReadVersion = function () {
+      this.opts.hasReadVersion = true;
+      this.opts.lastVersion = this.version;
+      console.log("Acknowledged new version");
       this.saveSettings();
     };
     
     this.loadSettings = function () {
       console.log("Loading settings from LocalStorage...");
       if (localStorage.getItem('sk-bolus-advisor-options') === null) {
+        console.log("No settings found.");
         this.clearSettings();
       }
       this.opts = JSON.parse(localStorage.getItem('sk-bolus-advisor-options'));
-      console.log("Loaded. Updating...");
+      if (this.opts.lastVersion !== this.version) {
+        this.opts.hasReadVersion = false;
+        console.log("Update Detected: " + this.opts.lastVersion + " -> " + this.version);
+      }
+      console.log("Ready.")
       this.updateBolus();
     };
     
     this.saveSettings = function () {
-      console.log("Saving settings to LocalStorage...");
       localStorage.setItem('sk-bolus-advisor-options', JSON.stringify(this.opts));
-      console.log("Saved. Updating...");
+      console.log("Saving settings to LocalStorage...");
       this.updateBolus();
     };
     
     this.clearSettings = function () {
-      console.log("Restoring defaults...");
+      console.log("Restoring default settings...");
       this.opts = {
         "hasReadLegal": false,
+        "hasReadVersion": true,
+        "lastVersion": this.version,
         "carbRatio": {
           "insulin": 1,
           "carbs": 15
