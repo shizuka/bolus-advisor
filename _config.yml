@@ -5,6 +5,8 @@ url: "http://bolus.vortalcord.net"
 baseurl: ""
 markdown: kramdown
 
+exclude: ["bs-config.json","*.ini","Gemfile","Gemfile.lock","README.md","package.json"]
+
 gems:
   - jekyll-github-metadata
 

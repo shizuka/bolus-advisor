@@ -33,6 +33,7 @@
 //**** COLORS ****//
 $c-bg: $md-wht;
 $c-header: $md-wht;
+$c-info: $md-grn-lite;
 $c-warning: $md-yel-dark;
 $c-danger: $md-red-lite;
 $c-hilight: $md-gry-lite;
@@ -135,6 +136,8 @@ header {
 }
 
 footer {
+  border-top: 1px solid $c-hilight;
+  padding-top: 10px;
   text-align: center;
   font-size: $s-footer;
 }
@@ -143,6 +146,11 @@ footer {
   margin: 10px 0;
   padding: 10px;
   border-radius: 10px;
+}
+
+.info {
+  background-color: $c-info;
+  width: auto;
 }
 
 .warning {
@@ -238,9 +246,6 @@ hr.sep {
     font-size: $s-h1;
     margin-right: 0.25em;
   }
-}
-
-#readLegal {
   .close {
     margin-left: auto;
     color: $md-blk-lite;
