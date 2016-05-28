@@ -3,7 +3,9 @@
  * Shizuka Kamishima
  */
 (function () {
-  var app = angular.module('bolus-advisor', []);
+  var app = angular.module('bolus-advisor', []).config(function($interpolateProvider){
+    $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+  });
   
   app.directive('selectOnClick', function () {
     return function (scope, element, attrs) {
@@ -14,13 +16,10 @@
   });
   
   app.controller('AdvisorController', function () {
-
-    /**
-     * HEY SHIZU, MAKE SURE TO UPDATE THIS EVERY TIME YOU CHANGE ADVISOR STUFF
-     */
-    this.version = "1.0.0";
     
-    console.log("Bolus Advisor v" + this.version + " by Shizuka Kamishima");
+    this.version = document.getElementsByName('revision')[0].value;
+    
+    console.log("Bolus Advisor by Shizuka Kamishima - rev " + this.version.substr(0,7));
     
     this.currentBG = 0;
     this.bgRange = "";
@@ -87,7 +86,7 @@
         this.opts.hasReadVersion = false;
         console.log("Update Detected: " + this.opts.lastVersion + " -> " + this.version);
       }
-      console.log("Ready.")
+      console.log("Ready.");
       this.updateBolus();
     };
     

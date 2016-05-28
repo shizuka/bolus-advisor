@@ -11,6 +11,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ site.title }}</title>
+  <style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
   <div id="wrapper">
@@ -30,7 +35,7 @@
     
     <hr class="sep">
     
-    <div id="bolus-advisor" ng-controller="AdvisorController as advisor" ng-init="advisor.loadSettings()">
+    <div id="bolus-advisor" ng-controller="AdvisorController as advisor" ng-init="advisor.loadSettings()" ng-cloak>
       
       <div id="readLegal" class="warning banner" ng-hide="advisor.opts.hasReadLegal">
         <div class="icon"><i class="fa fa-fw fa-warning"></i></div>
@@ -44,7 +49,11 @@
       <div id="versioncheck" class="info banner" ng-hide="advisor.opts.hasReadVersion">
         <div class="icon"><i class="fa fa-fw fa-info-circle"></i></div>
         <div>
-          <strong>ADVISOR UPDATED</strong> - <span ng-bind="advisor.opts.lastVersion"></span> &raquo; <strong ng-bind="advisor.version"></strong><br>
+          <strong>ADVISOR UPDATED - 
+            <a target="_blank" title="See changes since last visit" ng-href="https://github.com/shizuka/bolus-advisor/compare/{[{advisor.opts.lastVersion}]}...{[{advisor.version}]}">
+              SEE CHANGES
+            </a>
+          </strong> <br>
           VERIFY SETTINGS BEFORE USE
         </div>
         <a class="close" ng-click="advisor.ackReadVersion()"><i class="fa fa-close"></i></a>
@@ -166,7 +175,7 @@
           </ul>
         </fieldset>
       </div> <!-- #settings -->
-      
+      <input type="hidden" name="revision" value="{{ site.github.build_revision | slice: 0,7 }}">
     </div> <!-- #bolus-advisor -->
       
     <hr class="sep">
@@ -221,7 +230,8 @@
     <p>I hope this page proves useful to you!</p>
     
     <footer>
-      <a href="https://github.com/shizuka/bolus-advisor">bolus advisor</a> | shizuka kamishima | {{ site.time | date: '%F' }}
+      <a href="https://github.com/shizuka/bolus-advisor">bolus advisor</a> | shizuka kamishima | {{ site.time | date: '%F' }} <br>
+      revision <a href="https://github.com/shizuka/bolus-advisor/commit/{{ site.github.build_revision}}">{{ site.github.build_revision | slice: 0,7 }}</a>
     </footer>
   </div>
 </body>
