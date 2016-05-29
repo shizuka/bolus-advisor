@@ -30,6 +30,24 @@
       "final": 0
     };
     
+    this.unitOptions = {
+      "rounding": {
+        "full": "1",
+        "half": "0.5",
+        "tens": "0.1"
+      },
+      "bg": {
+        "mgdl": "mg/dL",
+        "mmoll": "mmol/L"
+      },
+      "carbs": {
+        "g": "g - Grams",
+        "KE": "KE - Kohlenhydrateinheit (10g)",
+        "BE": "BE - Bread Equivalent (12g)}",
+        "CC": "CC - Carbohydrate Choice (15g)"
+      }
+    };
+    
     var defaultSettings = {
       "hasReadLegal": false,
       "hasReadVersion": true,
@@ -44,7 +62,7 @@
       },
       "units": {
         "rounding": "tens",
-        "bg": "mg/dL",
+        "bg": "mgdl",
         "carbs": "g",
       },
       "bgLevels": {
@@ -115,14 +133,14 @@
     
     this.loadSettings = function () {
       console.log("Init default settings...");
-      this.opts = defaultSettings;
+      this.opts = clone(defaultSettings);
       console.log("Loading settings from LocalStorage...");
       if (localStorage.getItem('sk-bolus-advisor-options') === null) {
         console.log("None found, using defaults.");
       } else {
         console.log("Found settings, overwriting defaults...");
         var in_opts = JSON.parse(localStorage.getItem('sk-bolus-advisor-options'));
-        this.opts = mergeSettings(defaultSettings, in_opts);
+        this.opts = mergeSettings(clone(defaultSettings), in_opts);
       }
       if (this.opts.lastVersion !== this.version) {
         this.opts.hasReadVersion = false;
@@ -141,7 +159,7 @@
     
     this.clearSettings = function () {
       console.log("Restoring default settings...");
-      this.opts = defaultSettings;
+      this.opts = clone(defaultSettings);
       this.saveSettings();
     };
     
@@ -165,6 +183,10 @@
       }
       return outO;
     };
+    
+    var clone = function (obj) {
+      return JSON.parse(JSON.stringify(obj));
+    }
     
   });
 })();
