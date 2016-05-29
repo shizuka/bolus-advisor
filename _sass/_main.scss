@@ -60,7 +60,7 @@ $ct-clearall-hover: $md-red-lite;
 
 $ct-outval: $md-blk-lite;
 
-$cl-link: $md-blu-dark;
+$cl-link: $md-red-dark;
 $cl-hover: lighten($cl-link, 25%);
 
 //**** FONTS ****//
@@ -264,7 +264,7 @@ hr.sep {
   height: 48px;
   h2 {
     display: inline-block;
-    margin-right: 1em;
+    margin-right: 0.5em;
     margin-left: auto;
     margin-bottom: 0;
     font-size: $s-h1;
