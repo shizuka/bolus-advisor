@@ -43,6 +43,7 @@
         "bgDrop": 50
       },
       "units": {
+        "rounding": "tens",
         "bg": "mg/dL",
         "carbs": "g",
       },
@@ -76,13 +77,26 @@
         this.bgRange = "";
         this.calc.bg = 0;
       }
-      this.calc.carb = (this.carbs * carbRatio);
+      this.calc.bg = Math.round(this.calc.bg * 10) / 10;
+      this.calc.carb = Math.round(this.carbs * carbRatio * 10) / 10;
       this.calc.final = Math.max(0, this.calc.bg + this.calc.carb);
-
+      
+      switch (this.opts.units.rounding) {
+        case ("full"):
+          this.calc.final = Math.round(this.calc.final);
+          break;
+        case ("half"):
+          this.calc.final = (Math.round(this.calc.final * 2) / 2).toFixed(1);
+          break;
+        case ("tens"):
+          this.calc.final = (Math.round(this.calc.final * 10) / 10).toFixed(1);
+          break;
+      }
+      
       this.bolus = {
-        "bg": (this.calc.bg < 0 ? '' : '+') + this.calc.bg.toFixed(1),
-        "carb": (this.calc.carb < 0 ? '' : '+') + this.calc.carb.toFixed(1),
-        "final": this.calc.final.toFixed(1)
+        "bg": (this.calc.bg < 0 ? '' : '+') + this.calc.bg,
+        "carb": (this.calc.carb < 0 ? '' : '+') + this.calc.carb,
+        "final": this.calc.final
       };
     };
     

@@ -108,6 +108,16 @@
           <legend>Units</legend>
           <ul class="units">
             <li>
+              <label for="rounding">
+                Round advice to nearest:
+                <select name="Bolus Rounding" id="rounding" ng-model="advisor.opts.units.rounding" ng-change="advisor.saveSettings()">
+                  <option value="full">1</option>
+                  <option value="half">0.5</option>
+                  <option value="tens">0.1</option>
+                </select> u
+              </label>
+            </li>
+            <li>
               <label for="bgunits">
                 bG Units:
                 <select name="bG Units" id="bgunits" ng-model="advisor.opts.units.bg" ng-change="advisor.saveSettings()">
