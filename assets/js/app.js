@@ -100,23 +100,28 @@
     };
     
     this.loadSettings = function () {
+      console.log("Init default settings...");
+      this.opts = defaultSettings;
       console.log("Loading settings from LocalStorage...");
       if (localStorage.getItem('sk-bolus-advisor-options') === null) {
-        console.log("No settings found.");
-        this.clearSettings();
+        console.log("None found, using defaults.");
+      } else {
+        console.log("Found settings, overwriting defaults...");
+        var in_opts = JSON.parse(localStorage.getItem('sk-bolus-advisor-options'));
+        this.opts = mergeSettings(defaultSettings, in_opts);
       }
-      this.opts = JSON.parse(localStorage.getItem('sk-bolus-advisor-options'));
       if (this.opts.lastVersion !== this.version) {
         this.opts.hasReadVersion = false;
         console.log("Update Detected: " + this.opts.lastVersion + " -> " + this.version);
       }
-      console.log("Ready.");
+      this.saveSettings();
+      console.log("Ready!");
       this.updateBolus();
     };
     
     this.saveSettings = function () {
       localStorage.setItem('sk-bolus-advisor-options', JSON.stringify(this.opts));
-      console.log("Saving settings to LocalStorage...");
+      console.log("Saved.");
       this.updateBolus();
     };
     
@@ -124,6 +129,27 @@
       console.log("Restoring default settings...");
       this.opts = defaultSettings;
       this.saveSettings();
+    };
+    
+    var mergeSettings = function (outO, inO) {
+      /**
+       * outO : output, provides defaults to be overridden by...
+       * inO  : input, overwrites outO's properties if it has them
+       *
+       * If inO is missing keys, outO provides them
+       */
+      for (var p in inO) {
+        try {
+          if (inO[p].constructor == Object) {
+            outO[p] = mergeSettings(outO[p], inO[p]);
+          } else {
+            outO[p] = inO[p];
+          }
+        } catch (e) {
+          outO[p] = inO[p];
+        }
+      }
+      return outO;
     };
     
   });
