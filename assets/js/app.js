@@ -30,6 +30,30 @@
       "final": 0
     };
     
+    var defaultSettings = {
+      "hasReadLegal": false,
+      "hasReadVersion": true,
+      "lastVersion": this.version,
+      "carbRatio": {
+        "insulin": 1,
+        "carbs": 15
+      },
+      "insulinSensitivity": {
+        "insulin": 1,
+        "bgDrop": 50
+      },
+      "units": {
+        "bg": "mg/dL",
+        "carbs": "g",
+      },
+      "bgLevels": {
+        "hyper": 250,
+        "high": 200,
+        "low": 100,
+        "hypo": 70
+      }
+    };
+    
     this.updateBolus = function () {
       /* Bolus = [(current bG - Target bG) * (insulin / bgDrop)] + [carbs * (insulin / carbs)] */
       var carbRatio = this.opts.carbRatio.insulin / this.opts.carbRatio.carbs;
@@ -98,29 +122,7 @@
     
     this.clearSettings = function () {
       console.log("Restoring default settings...");
-      this.opts = {
-        "hasReadLegal": false,
-        "hasReadVersion": true,
-        "lastVersion": this.version,
-        "carbRatio": {
-          "insulin": 1,
-          "carbs": 15
-        },
-        "insulinSensitivity": {
-          "insulin": 1,
-          "bgDrop": 50
-        },
-        "units": {
-          "bg": "mg/dL",
-          "carbs": "g",
-        },
-        "bgLevels": {
-          "hyper": 250,
-          "high": 200,
-          "low": 100,
-          "hypo": 70
-        }
-      };
+      this.opts = defaultSettings;
       this.saveSettings();
     };
     
